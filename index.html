@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco-Subs - Cultive sua própria comida</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-green: #2d5016;
+            --light-green: #4a7c28;
+            --accent-green: #6fa844;
+            --light-accent: #8bc34a;
+            --brown: #6d4c41;
+            --light-brown: #a1887f;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --gray: #757575;
+            --dark-gray: #424242;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-hover: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-gray);
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background: var(--white);
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-green);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            color: var(--accent-green);
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: var(--dark-gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-menu a:hover {
+            color: var(--accent-green);
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 0.5rem;
+            background: var(--light-gray);
+            padding: 0.25rem;
+            border-radius: 20px;
+        }
+
+        .lang-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .lang-btn.active {
+            background: var(--white);
+            color: var(--primary-green);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary-green);
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 70px;
+            min-height: 90vh;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+                        url('https://picsum.photos/seed/garden/1920/1080.jpg') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: var(--accent-green);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(111, 168, 68, 0.3);
+        }
+
+        .cta-button:hover {
+            background: var(--light-green);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(111, 168, 68, 0.4);
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--primary-green);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--gray);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        /* Species Grid */
+        .species-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .species-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .species-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .species-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .species-card-content {
+            padding: 1.5rem;
+        }
+
+        .species-card h3 {
+            color: var(--primary-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .species-card p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .species-link {
+            color: var(--accent-green);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.3s ease;
+        }
+
+        .species-link:hover {
+            gap: 1rem;
+        }
+
+        /* Tips Section */
+        .tips-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .tip-card {
+            background: linear-gradient(135deg, var(--light-gray), var(--white));
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .tip-card:hover {
+            transform: scale(1.05);
+        }
+
+        .tip-card i {
+            font-size: 3rem;
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+        }
+
+        .tip-card h3 {
+            color: var(--primary-green);
+            margin-bottom: 1rem;
+        }
+
+        /* Pest Control */
+        .pest-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .pest-method {
+            background: var(--white);
+            padding: 1.5rem;
+            border-left: 4px solid var(--accent-green);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .pest-method h4 {
+            color: var(--primary-green);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Technology Section */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .tech-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .tech-card:hover {
+            transform: translateX(10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .tech-icon {
+            font-size: 2.5rem;
+            color: var(--accent-green);
+            min-width: 60px;
+        }
+
+        /* Creation Section */
+        .creation-blocks {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .creation-block {
+            background: linear-gradient(135deg, var(--light-green), var(--accent-green));
+            color: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .creation-block:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(111, 168, 68, 0.3);
+        }
+
+        .creation-block h3 {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .creation-block ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .creation-block li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .creation-block li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+        }
+
+        /* Final Recommendations */
+        .final-section {
+            background: linear-gradient(135deg, var(--light-gray), var(--white));
+            text-align: center;
+            padding: 4rem 2rem;
+            border-radius: 20px;
+            margin: 3rem auto;
+            max-width: 800px;
+        }
+
+        .final-section h2 {
+            color: var(--primary-green);
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        .final-section p {
+            font-size: 1.1rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-green);
+            color: var(--white);
+            padding: 3rem 2rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .social-links {
+            margin: 2rem 0;
+        }
+
+        .social-links a {
+            color: var(--white);
+            font-size: 1.5rem;
+            margin: 0 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--light-accent);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background: var(--white);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: var(--shadow);
+                padding: 2rem 0;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="#" class="logo">
+                <i class="fas fa-leaf"></i>
+                Eco-Subs
+            </a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#species" data-translate="menu_sections">Seções</a></li>
+                <li><a href="#tech" data-translate="menu_languages">Idiomas</a></li>
+                <li><a href="#" data-translate="menu_dealegear">DealeGear</a></li>
+                <li>
+                    <div class="language-selector">
+                        <button class="lang-btn active" data-lang="pt">PT</button>
+                        <button class="lang-btn" data-lang="en">EN</button>
+                        <button class="lang-btn" data-lang="es">ES</button>
+                    </div>
+                </li>
+            </ul>
+            <button class="mobile-menu-toggle" id="mobileToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 data-translate="hero_title">Cultive sua própria comida</h1>
+            <p data-translate="hero_description">
+                Projeto de agricultura caseira para subsistência básica. 
+                O objetivo é ensinar e facilitar a criação de pequenas hortas e sistemas produtivos em casa, 
+                com foco em sustentabilidade, reaproveitamento e autonomia alimentar. 
+                Inclui tutoriais, automações simples, design de hortas verticais e ideias para produzir alimentos 
+                em espaços reduzidos.
+            </p>
+            <a href="#species" class="cta-button" data-translate="hero_button">Começar agora</a>
+        </div>
+    </section>
+
+    <!-- Species Section -->
+    <section id="species" class="fade-in">
+        <h2 class="section-title" data-translate="species_title">Espécies recomendadas</h2>
+        <p class="section-subtitle" data-translate="species_subtitle">Plantas ideais para pequenos espaços e alimentação de emergência.</p>
+        
+        <div class="species-grid">
+            <div class="species-card">
+                <img src="https://picsum.photos/seed/lettuce/400/300.jpg" alt="Alface">
+                <div class="species-card-content">
+                    <h3 data-translate="species_lettuce">Alface</h3>
+                    <p data-translate="species_lettuce_desc">Crescimento rápido, rica em vitaminas A e K. Colheita em 30-60 dias.</p>
+                    <a href="#" class="species-link" data-translate="learn_more">Saiba mais <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <div class="species-card">
+                <img src="https://picsum.photos/seed/tomato/400/300.jpg" alt="Tomate Cereja">
+                <div class="species-card-content">
+                    <h3 data-translate="species_tomato">Tomate Cereja</h3>
+                    <p data-translate="species_tomato_desc">Produtivo e versátil, fonte de licopeno. Colheita contínua por meses.</p>
+                    <a href="#" class="species-link" data-translate="learn_more">Saiba mais <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <div class="species-card">
+                <img src="https://picsum.photos/seed/kale/400/300.jpg" alt="Couve">
+                <div class="species-card-content">
+                    <h3 data-translate="species_kale">Couve</h3>
+                    <p data-translate="species_kale_desc">Superalimento nutritivo, resistente a climas variados. Colheita folha a folha.</p>
+                    <a href="#" class="species-link" data-translate="learn_more">Saiba mais <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <div class="species-card">
+                <img src="https://picsum.photos/seed/basil/400/300.jpg" alt="Manjericão">
+                <div class="species-card-content">
+                    <h3 data-translate="species_basil">Manjericão</h3>
+                    <p data-translate="species_basil_desc">Aromático e medicinal, repele insetos. Ideal para cultivo em vasos.</p>
+                    <a href="#" class="species-link" data-translate="learn_more">Saiba mais <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <div class="species-card">
+                <img src="https://picsum.photos/seed/sweetpotato/400/300.jpg" alt="Batata-doce">
+                <div class="species-card-content">
+                    <h3 data-translate="species_sweetpotato">Batata-doce</h3>
+                    <p data-translate="species_sweetpotato_desc">Alto rendimento calórico, folhas também comestíveis. Armazenamento prolongado.</p>
+                    <a href="#" class="species-link" data-translate="learn_more">Saiba mais <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <div class="species-card">
+                <img src="https://picsum.photos/seed/pepper/400/300.jpg" alt="Pimentão">
+                <div class="species-card-content">
+                    <h3 data-translate="species_pepper">Pimentão</h3>
+                    <p data-translate="species_pepper_desc">Rico em vitamina C, variedade de cores. Produção estendida com poda adequada.</p>
+                    <a href="#" class="species-link" data-translate="learn_more">Saiba mais <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cultivation Section -->
+    <section class="fade-in">
+        <h2 class="section-title" data-translate="cultivation_title">Cultivo</h2>
+        <p class="section-subtitle" data-translate="cultivation_subtitle">Fundamentos essenciais para uma horta produtiva</p>
+        
+        <div class="tips-container">
+            <div class="tip-card">
+                <i class="fas fa-seedling"></i>
+                <h3 data-translate="tip_soil">Solo</h3>
+                <p data-translate="tip_soil_desc">Use substrato rico em matéria orgânica. Mantenha pH entre 6.0 e 7.0 para maioria das hortaliças.</p>
+            </div>
+            
+            <div class="tip-card">
+                <i class="fas fa-sun"></i>
+                <h3 data-translate="tip_light">Luz</h3>
+                <p data-translate="tip_light_desc">Mínimo 6 horas de sol direto. Variedades de folha toleram meia-sombra.</p>
+            </div>
+            
+            <div class="tip-card">
+                <i class="fas fa-tint"></i>
+                <h3 data-translate="tip_irrigation">Irrigação</h3>
+                <p data-translate="tip_irrigation_desc">Regue pela manhã. Mantenha solo úmido mas não encharcado. Mulching ajuda reter umidade.</p>
+            </div>
+            
+            <div class="tip-card">
+                <i class="fas fa-recycle"></i>
+                <h3 data-translate="tip_compost">Compostagem</h3>
+                <p data-translate="tip_compost_desc">Transforme resíduos orgânicos em adubo. Reduz lixo e enriquece o solo naturalmente.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pest Control Section -->
+    <section class="fade-in">
+        <h2 class="section-title" data-translate="pest_title">Controle de pragas</h2>
+        <p class="section-subtitle" data-translate="pest_subtitle">Métodos naturais para proteger suas plantas</p>
+        
+        <div class="pest-methods">
+            <div class="pest-method">
+                <h4 data-translate="pest_method1_title">Calda Bordalesa</h4>
+                <p data-translate="pest_method1_desc">Mistura de sulfato de cobre e cal virgem. Prevenção de fungos e doenças bacterianas.</p>
+            </div>
+            
+            <div class="pest-method">
+                <h4 data-translate="pest_method2_title">Armadilhas Adesivas</h4>
+                <p data-translate="pest_method2_desc">Placas amarelas ou azuis com cola pegajosa. Monitoramento e controle de insetos voadores.</p>
+            </div>
+            
+            <div class="pest-method">
+                <h4 data-translate="pest_method3_title">Consórcio de Plantas</h4>
+                <p data-translate="pest_method3_desc">Associe plantas que se protegem mutuamente. Ex: alecrino repelente de borboletas.</p>
+            </div>
+            
+            <div class="pest-method">
+                <h4 data-translate="pest_method4_title">Controle Biológico</h4>
+                <p data-translate="pest_method4_desc">Introduza predadores naturais. Joaninhas controlam pulgões, vespas parasitoides controlam lagartas.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section id="tech" class="fade-in">
+        <h2 class="section-title" data-translate="tech_title">Tecnologia no cultivo</h2>
+        <p class="section-subtitle" data-translate="tech_subtitle">Automação simples para máxima eficiência</p>
+        
+        <div class="tech-grid">
+            <div class="tech-card">
+                <div class="tech-icon">
+                    <i class="fas fa-microchip"></i>
+                </div>
+                <div>
+                    <h3 data-translate="tech_arduino">Arduino</h3>
+                    <p data-translate="tech_arduino_desc">Sensores de umidade controlam irrigação automática. Programação simples e custo acessível.</p>
+                </div>
+            </div>
+            
+            <div class="tech-card">
+                <div class="tech-icon">
+                    <i class="fas fa-desktop"></i>
+                </div>
+                <div>
+                    <h3 data-translate="tech_raspberry">Raspberry Pi</h3>
+                    <p data-translate="tech_raspberry_desc">Controle avançado de temperatura e iluminação. Câmeras para monitoramento remoto.</p>
+                </div>
+            </div>
+            
+            <div class="tech-card">
+                <div class="tech-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <div>
+                    <h3 data-translate="tech_apps">Aplicativos</h3>
+                    <p data-translate="tech_apps_desc">Acompanhamento do crescimento, calendário de plantio e alertas de cuidados via smartphone.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Creation Section -->
+    <section class="fade-in">
+        <h2 class="section-title" data-translate="creation_title">Criação doméstica</h2>
+        <p class="section-subtitle" data-translate="creation_subtitle">Expanda sua autossuficiência</p>
+        
+        <div class="creation-blocks">
+            <div class="creation-block">
+                <h3><i class="fas fa-egg"></i> <span data-translate="creation_chickens">Galinhas</span></h3>
+                <ul>
+                    <li data-translate="creation_chickens1">Espaço mínimo: 0.37m² por ave</li>
+                    <li data-translate="creation_chickens2">Alimentação: ração + restos orgânicos</li>
+                    <li data-translate="creation_chickens3">Produção: 200-300 ovos/ano</li>
+                    <li data-translate="creation_chickens4">Controle de pragas natural</li>
+                </ul>
+            </div>
+            
+            <div class="creation-block">
+                <h3><i class="fas fa-fish"></i> <span data-translate="creation_fish">Peixes (Aquaponia)</span></h3>
+                <ul>
+                    <li data-translate="creation_fish1">Ciclo integrado: peixes + plantas</li>
+                    <li data-translate="creation_fish2">Oxigenação constante essencial</li>
+                    <li data-translate="creation_fish3">Filtragem biológica com plantas</li>
+                    <li data-translate="creation_fish4">90% economia de água</li>
+                </ul>
+            </div>
+            
+            <div class="creation-block">
+                <h3><i class="fas fa-temperature-high"></i> <span data-translate="creation_climate">Climas Extremos</span></h3>
+                <ul>
+                    <li data-translate="creation_climate1">Calor: sombreamento e mulching</li>
+                    <li data-translate="creation_climate2">Frio: estufas e coberturas</li>
+                    <li data-translate="creation_climate3">Seca: irrigação gotejamento</li>
+                    <li data-translate="creation_climate4">Escolha de variedades resistentes</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final Section -->
+    <section class="final-section fade-in">
+        <h2 data-translate="final_title">Recomendações finais</h2>
+        <p data-translate="final_description">
+            A autossuficiência começa com pequenos passos. 
+            Plante hoje, aprenda e compartilhe o que você colhe. 
+            Cada semente plantada é um passo em direção à independência alimentar e um planeta mais sustentável.
+        </p>
+        <a href="#" class="cta-button" data-translate="final_button">Acompanhar atualizações</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="https://instagram.com/luiz.sousa.moreira" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" target="_blank">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="#" target="_blank">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </div>
+            <p>Luiz Moreira © 2025</p>
+            <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">
+                Instagram: @luiz.sousa.moreira
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Translations
+        const translations = {
+            pt: {
+                menu_sections: "Seções",
+                menu_languages: "Idiomas",
+                menu_dealegear: "DealeGear",
+                hero_title: "Cultive sua própria comida",
+                hero_description: "Projeto de agricultura caseira para subsistência básica. O objetivo é ensinar e facilitar a criação de pequenas hortas e sistemas produtivos em casa, com foco em sustentabilidade, reaproveitamento e autonomia alimentar. Inclui tutoriais, automações simples, design de hortas verticais e ideias para produzir alimentos em espaços reduzidos.",
+                hero_button: "Começar agora",
+                species_title: "Espécies recomendadas",
+                species_subtitle: "Plantas ideais para pequenos espaços e alimentação de emergência.",
+                species_lettuce: "Alface",
+                species_lettuce_desc: "Crescimento rápido, rica em vitaminas A e K. Colheita em 30-60 dias.",
+                species_tomato: "Tomate Cereja",
+                species_tomato_desc: "Produtivo e versátil, fonte de licopeno. Colheita contínua por meses.",
+                species_kale: "Couve",
+                species_kale_desc: "Superalimento nutritivo, resistente a climas variados. Colheita folha a folha.",
+                species_basil: "Manjericão",
+                species_basil_desc: "Aromático e medicinal, repele insetos. Ideal para cultivo em vasos.",
+                species_sweetpotato: "Batata-doce",
+                species_sweetpotato_desc: "Alto rendimento calórico, folhas também comestíveis. Armazenamento prolongado.",
+                species_pepper: "Pimentão",
+                species_pepper_desc: "Rico em vitamina C, variedade de cores. Produção estendida com poda adequada.",
+                learn_more: "Saiba mais",
+                cultivation_title: "Cultivo",
+                cultivation_subtitle: "Fundamentos essenciais para uma horta produtiva",
+                tip_soil: "Solo",
+                tip_soil_desc: "Use substrato rico em matéria orgânica. Mantenha pH entre 6.0 e 7.0 para maioria das hortaliças.",
+                tip_light: "Luz",
+                tip_light_desc: "Mínimo 6 horas de sol direto. Variedades de folha toleram meia-sombra.",
+                tip_irrigation: "Irrigação",
+                tip_irrigation_desc: "Regue pela manhã. Mantenha solo úmido mas não encharcado. Mulching ajuda reter umidade.",
+                tip_compost: "Compostagem",
+                tip_compost_desc: "Transforme resíduos orgânicos em adubo. Reduz lixo e enriquece o solo naturalmente.",
+                pest_title: "Controle de pragas",
+                pest_subtitle: "Métodos naturais para proteger suas plantas",
+                pest_method1_title: "Calda Bordalesa",
+                pest_method1_desc: "Mistura de sulfato de cobre e cal virgem. Prevenção de fungos e doenças bacterianas.",
+                pest_method2_title: "Armadilhas Adesivas",
+                pest_method2_desc: "Placas amarelas ou azuis com cola pegajosa. Monitoramento e controle de insetos voadores.",
+                pest_method3_title: "Consórcio de Plantas",
+                pest_method3_desc: "Associe plantas que se protegem mutuamente. Ex: alecrino repelente de borboletas.",
+                pest_method4_title: "Controle Biológico",
+                pest_method4_desc: "Introduza predadores naturais. Joaninhas controlam pulgões, vespas parasitoides controlam lagartas.",
+                tech_title: "Tecnologia no cultivo",
+                tech_subtitle: "Automação simples para máxima eficiência",
+                tech_arduino: "Arduino",
+                tech_arduino_desc: "Sensores de umidade controlam irrigação automática. Programação simples e custo acessível.",
+                tech_raspberry: "Raspberry Pi",
+                tech_raspberry_desc: "Controle avançado de temperatura e iluminação. Câmeras para monitoramento remoto.",
+                tech_apps: "Aplicativos",
+                tech_apps_desc: "Acompanhamento do crescimento, calendário de plantio e alertas de cuidados via smartphone.",
+                creation_title: "Criação doméstica",
+                creation_subtitle: "Expanda sua autossuficiência",
+                creation_chickens: "Galinhas",
+                creation_chickens1: "Espaço mínimo: 0.37m² por ave",
+                creation_chickens2: "Alimentação: ração + restos orgânicos",
+                creation_chickens3: "Produção: 200-300 ovos/ano",
+                creation_chickens4: "Controle de pragas natural",
+                creation_fish: "Peixes (Aquaponia)",
+                creation_fish1: "Ciclo integrado: peixes + plantas",
+                creation_fish2: "Oxigenação constante essencial",
+                creation_fish3: "Filtragem biológica com plantas",
+                creation_fish4: "90% economia de água",
+                creation_climate: "Climas Extremos",
+                creation_climate1: "Calor: sombreamento e mulching",
+                creation_climate2: "Frio: estufas e coberturas",
+                creation_climate3: "Seca: irrigação gotejamento",
+                creation_climate4: "Escolha de variedades resistentes",
+                final_title: "Recomendações finais",
+                final_description: "A autossuficiência começa com pequenos passos. Plante hoje, aprenda e compartilhe o que você colhe. Cada semente plantada é um passo em direção à independência alimentar e um planeta mais sustentável.",
+                final_button: "Acompanhar atualizações"
+            },
+            en: {
+                menu_sections: "Sections",
+                menu_languages: "Languages",
+                menu_dealegear: "DealeGear",
+                hero_title: "Grow your own food",
+                hero_description: "Home agriculture project for basic subsistence. The goal is to teach and facilitate the creation of small gardens and productive systems at home, focusing on sustainability, resource reuse and food autonomy. Includes tutorials, simple automations, vertical garden designs and ideas for producing food in small spaces.",
+                hero_button: "Get started now",
+                species_title: "Recommended species",
+                species_subtitle: "Ideal plants for small spaces and emergency food.",
+                species_lettuce: "Lettuce",
+                species_lettuce_desc: "Fast growing, rich in vitamins A and K. Harvest in 30-60 days.",
+                species_tomato: "Cherry Tomato",
+                species_tomato_desc: "Productive and versatile, source of lycopene. Continuous harvest for months.",
+                species_kale: "Kale",
+                species_kale_desc: "Nutritious superfood, resistant to varying climates. Leaf-by-leaf harvest.",
+                species_basil: "Basil",
+                species_basil_desc: "Aromatic and medicinal, repels insects. Ideal for pot cultivation.",
+                species_sweetpotato: "Sweet Potato",
+                species_sweetpotato_desc: "High caloric yield, edible leaves too. Extended storage.",
+                species_pepper: "Bell Pepper",
+                species_pepper_desc: "Rich in vitamin C, variety of colors. Extended production with proper pruning.",
+                learn_more: "Learn more",
+                cultivation_title: "Cultivation",
+                cultivation_subtitle: "Essential fundamentals for a productive garden",
+                tip_soil: "Soil",
+                tip_soil_desc: "Use substrate rich in organic matter. Keep pH between 6.0 and 7.0 for most vegetables.",
+                tip_light: "Light",
+                tip_light_desc: "Minimum 6 hours of direct sun. Leaf varieties tolerate partial shade.",
+                tip_irrigation: "Irrigation",
+                tip_irrigation_desc: "Water in the morning. Keep soil moist but not waterlogged. Mulching helps retain moisture.",
+                tip_compost: "Composting",
+                tip_compost_desc: "Transform organic waste into fertilizer. Reduces waste and naturally enriches soil.",
+                pest_title: "Pest control",
+                pest_subtitle: "Natural methods to protect your plants",
+                pest_method1_title: "Bordeaux Mixture",
+                pest_method1_desc: "Mix of copper sulfate and slaked lime. Prevention of fungi and bacterial diseases.",
+                pest_method2_title: "Sticky Traps",
+                pest_method2_desc: "Yellow or blue plates with sticky glue. Monitoring and control of flying insects.",
+                pest_method3_title: "Plant Companionship",
+                pest_method3_desc: "Associate plants that protect each other. Ex: rosemary repels butterflies.",
+                pest_method4_title: "Biological Control",
+                pest_method4_desc: "Introduce natural predators. Ladybugs control aphids, parasitoid wasps control caterpillars.",
+                tech_title: "Technology in cultivation",
+                tech_subtitle: "Simple automation for maximum efficiency",
+                tech_arduino: "Arduino",
+                tech_arduino_desc: "Moisture sensors control automatic irrigation. Simple programming and affordable cost.",
+                tech_raspberry: "Raspberry Pi",
+                tech_raspberry_desc: "Advanced control of temperature and lighting. Cameras for remote monitoring.",
+                tech_apps: "Apps",
+                tech_apps_desc: "Growth tracking, planting calendar and care alerts via smartphone.",
+                creation_title: "Domestic creation",
+                creation_subtitle: "Expand your self-sufficiency",
+                creation_chickens: "Chickens",
+                creation_chickens1: "Minimum space: 0.37m² per bird",
+                creation_chickens2: "Feeding: feed + organic scraps",
+                creation_chickens3: "Production: 200-300 eggs/year",
+                creation_chickens4: "Natural pest control",
+                creation_fish: "Fish (Aquaponics)",
+                creation_fish1: "Integrated cycle: fish + plants",
+                creation_fish2: "Constant oxygenation essential",
+                creation_fish3: "Biological filtration with plants",
+                creation_fish4: "90% water savings",
+                creation_climate: "Extreme Climates",
+                creation_climate1: "Heat: shading and mulching",
+                creation_climate2: "Cold: greenhouses and covers",
+                creation_climate3: "Drought: drip irrigation",
+                creation_climate4: "Choose resistant varieties",
+                final_title: "Final recommendations",
+                final_description: "Self-sufficiency starts with small steps. Plant today, learn and share what you harvest. Every seed planted is a step towards food independence and a more sustainable planet.",
+                final_button: "Follow updates"
+            },
+            es: {
+                menu_sections: "Secciones",
+                menu_languages: "Idiomas",
+                menu_dealegear: "DealeGear",
+                hero_title: "Cultiva tu propia comida",
+                hero_description: "Proyecto de agricultura casera para subsistencia básica. El objetivo es enseñar y facilitar la creación de pequeños huertos y sistemas productivos en casa, enfocándose en sostenibilidad, reutilización de recursos y autonomía alimentaria. Incluye tutoriales, automatizaciones simples, diseños de huertos verticales e ideas para producir alimentos en espacios reducidos.",
+                hero_button: "Comenzar ahora",
+                species_title: "Especies recomendadas",
+                species_subtitle: "Plantas ideales para espacios pequeños y alimentación de emergencia.",
+                species_lettuce: "Lechuga",
+                species_lettuce_desc: "Crecimiento rápido, rica en vitaminas A y K. Cosecha en 30-60 días.",
+                species_tomato: "Tomate Cherry",
+                species_tomato_desc: "Productivo y versátil, fuente de licopeno. Cosecha continua por meses.",
+                species_kale: "Col Rizada",
+                species_kale_desc: "Superalimento nutritivo, resistente a climas variables. Cosecha hoja por hoja.",
+                species_basil: "Albahaca",
+                species_basil_desc: "Aromática y medicinal, repele insectos. Ideal para cultivo en macetas.",
+                species_sweetpotato: "Batata Dulce",
+                species_sweetpotato_desc: "Alto rendimiento calórico, hojas también comestibles. Almacenamiento prolongado.",
+                species_pepper: "Pimiento",
+                species_pepper_desc: "Rico en vitamina C, variedad de colores. Producción extendida con poda adecuada.",
+                learn_more: "Saber más",
+                cultivation_title: "Cultivo",
+                cultivation_subtitle: "Fundamentos esenciales para un huerto productivo",
+                tip_soil: "Suelo",
+                tip_soil_desc: "Usa sustrato rico en materia orgánica. Mantén pH entre 6.0 y 7.0 para la mayoría de hortalizas.",
+                tip_light: "Luz",
+                tip_light_desc: "Mínimo 6 horas de sol directo. Variedades de hoja toleran media sombra.",
+                tip_irrigation: "Riego",
+                tip_irrigation_desc: "Riega por la mañana. Mantén suelo húmedo pero no encharcado. Mulching ayuda retener humedad.",
+                tip_compost: "Compostaje",
+                tip_compost_desc: "Transforma residuos orgánicos en fertilizante. Reduce basura y enriquece suelo naturalmente.",
+                pest_title: "Control de plagas",
+                pest_subtitle: "Métodos naturales para proteger tus plantas",
+                pest_method1_title: "Caldo Bordelés",
+                pest_method1_desc: "Mezcla de sulfato de cobre y cal viva. Prevención de hongos y enfermedades bacterianas.",
+                pest_method2_title: "Trampas Adhesivas",
+                pest_method2_desc: "Placas amarillas o azules con cola pegajosa. Monitoreo y control de insectos voladores.",
+                pest_method3_title: "Consorcio de Plantas",
+                pest_method3_desc: "Asocia plantas que se protegen mutuamente. Ej: romero repelente de mariposas.",
+                pest_method4_title: "Control Biológico",
+                pest_method4_desc: "Introduce depredadores naturales. Mariquitas controlan pulgones, avispas parasitoides controlan orugas.",
+                tech_title: "Tecnología en el cultivo",
+                tech_subtitle: "Automatización simple para máxima eficiencia",
+                tech_arduino: "Arduino",
+                tech_arduino_desc: "Sensores de humedad controlan riego automático. Programación simple y costo accesible.",
+                tech_raspberry: "Raspberry Pi",
+                tech_raspberry_desc: "Control avanzado de temperatura e iluminación. Cámaras para monitoreo remoto.",
+                tech_apps: "Aplicaciones",
+                tech_apps_desc: "Seguimiento del crecimiento, calendario de siembra y alertas de cuidados vía smartphone.",
+                creation_title: "Creación doméstica",
+                creation_subtitle: "Expande tu autosuficiencia",
+                creation_chickens: "Gallinas",
+                creation_chickens1: "Espacio mínimo: 0.37m² por ave",
+                creation_chickens2: "Alimentación: pienso + restos orgánicos",
+                creation_chickens3: "Producción: 200-300 huevos/año",
+                creation_chickens4: "Control natural de plagas",
+                creation_fish: "Peces (Acuaponia)",
+                creation_fish1: "Ciclo integrado: peces + plantas",
+                creation_fish2: "Oxigenación constante esencial",
+                creation_fish3: "Filtración biológica con plantas",
+                creation_fish4: "90% ahorro de agua",
+                creation_climate: "Climas Extremos",
+                creation_climate1: "Calor: sombreado y mulching",
+                creation_climate2: "Frío: invernaderos y cubiertas",
+                creation_climate3: "Sequía: riego por goteo",
+                creation_climate4: "Elige variedades resistentes",
+                final_title: "Recomendaciones finales",
+                final_description: "La autosuficiencia comienza con pequeños pasos. Planta hoy, aprende y comparte lo que cosechas. Cada semilla plantada es un paso hacia la independencia alimentaria y un planeta más sostenible.",
+                final_button: "Seguir actualizaciones"
+            }
+        };
+
+        // Language switcher
+        let currentLang = 'pt';
+        const langButtons = document.querySelectorAll('.lang-btn');
+        const translatableElements = document.querySelectorAll('[data-translate]');
+
+        function updateLanguage(lang) {
+            currentLang = lang;
+            translatableElements.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            
+            // Update HTML lang attribute
+            document.documentElement.lang = lang;
+            
+            // Update active button
+            langButtons.forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+            });
+        }
+
+        langButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                updateLanguage(button.getAttribute('data-lang'));
+            });
+        });
+
+        // Mobile menu toggle
+        const mobileToggle = document.getElementById('mobileToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        mobileToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            const icon = mobileToggle.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu if open
+                    navMenu.classList.remove('active');
+                    const icon = mobileToggle.querySelector('i');
+                    icon.classList.add('fa-bars');
+                    icon.classList.remove('fa-times');
+                }
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Header scroll effect
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            const header = document.querySelector('header');
+            
+            if (currentScroll > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+            } else {
+                header.style.background = 'var(--white)';
+                header.style.backdropFilter = 'none';
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add initial animations
+            setTimeout(() => {
+                document.querySelector('.hero-content').style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
